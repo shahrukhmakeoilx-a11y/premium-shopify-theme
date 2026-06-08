@@ -1,11 +1,18 @@
 <header>
   <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
+    <a href="{{routes.root_url}}">
+      {% if section.setting.logo %}
+        <img src="{{section.settings.logo | image_url: width: 200}}" alt="{{shop.name}}" />
+        {% else %}
+        {{shop.name}}
+      {% endif %}
+    </a>
   </h2>
 
   <div class="header__menu">
     {% for link in section.settings.menu.links %}
       {{ link.title | link_to: link.url }}
+      <h1>dfdf</h1>
     {% endfor %}
   </div>
 
@@ -55,12 +62,21 @@
     display: flex;
     gap: 1rem;
   }
+  .header__title img {
+  max-height: 60px;
+  width: auto;
+}
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.header",
   "settings": [
+    {
+      "type": "image_picker",
+      "id" : "logo",
+      "label" : "Logo",
+    },
     {
       "type": "link_list",
       "id": "menu",
